@@ -274,7 +274,7 @@
         .feedback.success { background: #d1fae5; color: #065f46; border: 1px solid #10b981; display: block; }
         .feedback.error { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; display: block; }
 
-        .reflection-box, .action-pledge { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--border); padding: 15px; border-radius: 8px; }
+        .reflection-box, .action-pledge { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--border); padding: 20px; border-radius: 8px; }
 
         /* Modal Sertifikat */
         #cert-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; }
@@ -360,7 +360,7 @@
         <section id="beranda" class="view-section">
             <div class="card">
                 <h2>Peta Petualangan & Misi Interaktif 🗺️</h2>
-                <p>Selesaikan 6 level misi secara berurutan. Baca kisah literasinya, tonton videonya, dan jawab kuisnya dengan benar untuk membuka gembok level berikutnya serta meraih sertifikat kelulusan!</p>
+                <p>Selesaikan 6 level misi secara berurutan. Baca kisah literasinya, tonton videonya, jawab kuisnya, isi refleksi serta aksi nyatanya untuk membuka gembok level berikutnya dan meraih sertifikat kelulusan!</p>
                 
                 <!-- Video Intro -->
                 <div class="video-container" id="vid-wrap-intro">
@@ -387,7 +387,7 @@
         <section id="guru" class="view-section">
             <div class="card">
                 <h2>👩‍🏫 Ruang Guru & Fasilitator</h2>
-                <p>Modul interaktif versi <strong>Gamifikasi Berjenjang (Leveling)</strong> ini dirancang untuk memicu motivasi belajar siswa Fase B & C melalui pendekatan tantangan dan reward (sertifikat). Sangat cocok diimplementasikan pada kegiatan <strong>kokurikuler ataupun Proyek Penguatan Profil Pelajar Pancasila (P5)</strong> tema Gaya Hidup Berkelanjutan.</p>
+                <p>Modul interaktif versi <strong>Gamifikasi Berjenjang (Leveling)</strong> ini dirancang untuk memicu motivasi belajar siswa Fase B & C melalui pendekatan tantangan, literasi, refleksi, dan reward (sertifikat). Sangat cocok diimplementasikan pada kegiatan <strong>kokurikuler ataupun Proyek Penguatan Profil Pelajar Pancasila (P5)</strong> tema Gaya Hidup Berkelanjutan.</p>
                 
                 <div class="rpp-box">
                     <h3>📋 Skenario Pembelajaran Singkat (RPP 40 Menit)</h3>
@@ -399,7 +399,7 @@
                     <h4>2. Kegiatan Inti (20 Menit)</h4>
                     <ul>
                         <li><strong>Kolaborasi:</strong> Siswa memasukkan nama profil dan membaca "Pojok Literasi" secara mandiri/berpasangan.</li>
-                        <li><strong>Aksi & Kuis:</strong> Siswa menonton video mandiri karya guru dan menyelesaikan 5 soal uji tangkas untuk membuka gembok level.</li>
+                        <li><strong>Aksi & Kuis:</strong> Siswa menonton video mandiri karya guru, menyelesaikan 5 soal uji tangkas, serta menuliskan Refleksi dan Aksi Nyata.</li>
                     </ul>
                     <h4>3. Penutup (10 Menit)</h4>
                     <ul>
@@ -446,7 +446,7 @@
             <h1>SERTIFIKAT PEJUANG BUMI</h1>
             <p style="font-size: 1.1rem; color: #475569;">Diberikan dengan bangga kepada:</p>
             <h1 id="cert-name-display" style="color: #2563eb; font-size: 2.8rem; text-decoration: underline; text-underline-offset: 8px; margin: 15px 0;">NAMA SISWA</h1>
-            <p style="font-size: 1.050rem; line-height: 1.6;">Telah berhasil menuntaskan <strong>6 Level Misi Literasi & Kesiapsiagaan Bencana</strong><br>di Portal Jatim Tangguh Bencana (JTB).</p>
+            <p style="font-size: 1.050rem; line-height: 1.6;">Telah berhasil menuntaskan <strong>6 Level Misi Literasi, Refleksi & Kesiapsiagaan Bencana</strong><br>di Portal Jatim Tangguh Bencana (JTB).</p>
             <p style="margin-top: 25px; font-weight: bold; font-size: 0.95rem;">Ernaz Siswanto, S.Pd., M.Pd.<br><span style="font-weight: normal; color: #64748b;">Kepala SDN Tulungrejo 03 Kota Batu / Pengembang Portal</span></p>
             
             <div class="no-print" style="margin-top: 25px; display: flex; justify-content: center; gap: 15px;">
@@ -676,9 +676,38 @@
                         </form>
                         <div id="feedback-${m.id}" class="feedback"></div>
                     </div>
+
+                    <!-- REFLEKSI BELAJAR -->
+                    <div class="reflection-box" id="reflection-area-${m.id}">
+                        <h3>🧠 Refleksi: Hari Ini Aku Tahu...</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Tuliskan hal penting atau pelajaran baru yang kamu dapatkan dari misi ini:</p>
+                        <textarea id="reflection-input-${m.id}" placeholder="Contoh: Hari ini aku tahu cara akar vetiver menahan longsor..." style="width:100%; height:80px; padding:10px; border-radius:6px; border:1px solid var(--border); margin-bottom:8px; background:var(--card-bg); color:var(--text-main);"></textarea>
+                        <button class="btn" onclick="saveReflection('${m.id}')" style="background: var(--secondary);">💾 Simpan Refleksi</button>
+                        <p id="reflection-saved-${m.id}" style="margin-top:6px; font-weight:600; color:var(--secondary); font-size:0.9rem;"></p>
+                    </div>
+
+                    <!-- AKSI NYATA / JANJI AKSI -->
+                    <div class="action-pledge" id="pledge-area-${m.id}" style="display: ${localStorage.getItem('badge_' + id) === 'true' ? 'block' : 'none'};">
+                        <h3>🌟 Aksi Kecilku Minggu Ini</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Tuliskan aksi nyata yang akan kamu lakukan di rumah/sekolah:</p>
+                        <input type="text" id="pledge-input-${m.id}" placeholder="Contoh: Mematikan keran air setelah selesai dipakai..." style="width:100%; padding:10px; margin-bottom:10px; border-radius:6px; border:1px solid var(--border); background:var(--card-bg); color:var(--text-main);">
+                        <button class="btn" onclick="savePledge('${m.id}')">💾 Simpan Janji Aksiku</button>
+                        <p id="pledge-saved-${m.id}" style="margin-top:8px; font-weight:600; color:var(--primary);"></p>
+                    </div>
                 </div>
             `;
             document.getElementById('mission-content-area').innerHTML = html;
+
+            // Muat data tersimpan jika ada
+            if(localStorage.getItem('pledge_' + id)) {
+                document.getElementById('pledge-input-' + id).value = localStorage.getItem('pledge_' + id);
+                document.getElementById('pledge-saved-' + id).innerText = '✅ Janji aksi tersimpan.';
+            }
+            if(localStorage.getItem('reflection_' + id)) {
+                document.getElementById('reflection-input-' + id).value = localStorage.getItem('reflection_' + id);
+                document.getElementById('reflection-saved-' + id).innerText = '✅ Refleksi tersimpan.';
+            }
+
             window.scrollTo(0,0);
         }
 
@@ -712,8 +741,13 @@
             const fb = document.getElementById('feedback-' + mid);
             if(allCorrect) {
                 fb.className = 'feedback success';
-                fb.innerHTML = '🎉 Luar Biasa! Semua jawabanmu BENAR.<br>Kamu telah membuka gembok level berikutnya!';
+                fb.innerHTML = '🎉 Luar Biasa! Semua jawabanmu BENAR.<br>Kamu telah membuka gembok level berikutnya & membuka kolom Aksi Nyata!';
                 localStorage.setItem('badge_' + mid, 'true');
+                
+                // Munculkan kotak aksi nyata
+                const pledgeArea = document.getElementById('pledge-area-' + mid);
+                if(pledgeArea) pledgeArea.style.display = 'block';
+
                 updateBadgeCount();
 
                 if(mid === 'gunung') {
@@ -721,7 +755,27 @@
                 }
             } else {
                 fb.className = 'feedback error';
-                fb.innerHTML = '💡 Masih ada jawaban yang kurang tepat. Yuk, baca ulang Pojok Literasinya dan periksa kembali jawabanmu!';
+                fb.innerHTML = '💡 Masih ada jawaban yang kurang tepat. Yuk, baca ulang Pojok Literasinya dan periksa kembali pilihanmu!';
+            }
+        }
+
+        function savePledge(mid) {
+            const v = document.getElementById('pledge-input-' + mid).value.trim();
+            if(v) { 
+                localStorage.setItem('pledge_' + mid, v); 
+                document.getElementById('pledge-saved-' + mid).innerText = '✅ Janji aksi berhasil disimpan!'; 
+            } else {
+                alert("Mohon tuliskan aksi nyatamu dulu ya!");
+            }
+        }
+
+        function saveReflection(mid) {
+            const v = document.getElementById('reflection-input-' + mid).value.trim();
+            if(v) { 
+                localStorage.setItem('reflection_' + mid, v); 
+                document.getElementById('reflection-saved-' + mid).innerText = '✅ Refleksi berhasil disimpan!'; 
+            } else {
+                alert("Mohon tuliskan refleksi belajarmu dulu ya!");
             }
         }
 
