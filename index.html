@@ -88,16 +88,25 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
+            text-decoration: none;
         }
 
         button:hover, .btn:hover { opacity: 0.9; }
         button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
+        /* Header Image Banner */
         header {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            color: white;
-            padding: 24px 16px;
+            width: 100%;
+            background: #0f172a;
             text-align: center;
+            line-height: 0;
+        }
+
+        header img {
+            width: 100%;
+            max-height: 380px;
+            object-fit: cover;
+            display: block;
         }
 
         .emergency-banner {
@@ -250,7 +259,7 @@
         .feedback.success { background: #d1fae5; color: #065f46; border: 1px solid #10b981; display: block; }
         .feedback.error { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; display: block; }
 
-        .action-pledge { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--border); padding: 15px; border-radius: 8px; }
+        .action-pledge, .reflection-box { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--border); padding: 15px; border-radius: 8px; }
 
         footer {
             text-align: center;
@@ -277,6 +286,7 @@
 </head>
 <body data-theme="light" data-contrast="normal" data-font="medium">
 
+    <!-- Toolbar Aksesibilitas -->
     <div class="accessibility-bar no-print">
         <div class="a11y-controls">
             <span>⚙️ Aksesibilitas:</span>
@@ -289,15 +299,17 @@
         </div>
     </div>
 
+    <!-- Banner Darurat -->
     <div class="emergency-banner no-print">
         <span>🚨 DARURAT NASIONAL: <strong>112</strong></span> | <span>SAR: <strong>115</strong></span> | <span>BMKG: <strong>196</strong></span>
     </div>
 
+    <!-- Header Banner Gambar Utama -->
     <header>
-        <h1>🌏 Portal Jatim Tangguh Bencana (JTB)</h1>
-        <p>Media Pembelajaran Digital Inklusif & Aksi Iklim SD/MI Jawa Timur</p>
+        <img src="image_dd4b21.jpg" alt="Portal Jatim Tangguh Bencana Header">
     </header>
 
+    <!-- Navigasi Utama -->
     <nav class="no-print">
         <a href="#beranda" onclick="showView('beranda')" class="active" id="nav-beranda">🏠 Beranda</a>
         <a href="#guru" onclick="showView('guru')" id="nav-guru">👩‍🏫 Ruang Guru</a>
@@ -309,7 +321,7 @@
         <section id="beranda" class="view-section active">
             <div class="card">
                 <h2>Selamat Datang, Pejuang Bumi Cilik! 👋</h2>
-                <p>Mari belajar bersama Siti, Budi, Rian (teman kita yang mandiri dengan kursi roda), dan Tiara (teman kita yang hebat dengan bahasa isyarat). Kita akan menjelajahi alam Jawa Timur dan belajar siaga bencana!</p>
+                <p>Portal pembelajaran interaktif khusus untuk <strong>Fase B & C (Kelas 3–6 Sekolah Dasar / MI)</strong>. Mari belajar bersama Siti, Budi, Rian (teman kita yang mandiri dengan kursi roda), dan Tiara (teman kita yang hebat dengan bahasa isyarat) dalam menjelajahi alam Jawa Timur serta siaga menghadapi bencana!</p>
                 <div class="video-container" id="vid-wrap-intro">
                     <div class="video-poster" style="background-image: url('https://img.youtube.com/vi/EnkdippnqI8/hqdefault.jpg');" onclick="loadVideo('intro', 'EnkdippnqI8')"></div>
                 </div>
@@ -331,31 +343,36 @@
         <section id="guru" class="view-section">
             <div class="card">
                 <h2>👩‍🏫 Ruang Guru & Fasilitator</h2>
-                <p>Modul interaktif ini disusun untuk mendukung pembelajaran berdiferensiasi dan inklusif (GEDSI). Sangat cocok diimplementasikan pada kegiatan <strong>Proyek Penguatan Profil Pelajar Pancasila (P5)</strong> tema Gaya Hidup Berkelanjutan.</p>
+                <p>Modul interaktif ini dirancang optimal untuk siswa <strong>Fase B & C (Kelas 3–6 SD/MI)</strong> guna mendukung pembelajaran berdiferensiasi dan inklusif (GEDSI), serta sangat cocok diimplementasikan pada kegiatan <strong>Proyek Penguatan Profil Pelajar Pancasila (P5)</strong> tema Gaya Hidup Berkelanjutan.</p>
                 
                 <div class="rpp-box">
                     <h3>📋 Skenario Pembelajaran Singkat (RPP 40 Menit)</h3>
                     <h4>1. Pendahuluan (10 Menit)</h4>
                     <ul>
-                        <li><strong>Kondisioning:</strong> Guru menyapa, memastikan ruang kelas aman dan dapat diakses oleh seluruh murid (ramah anak disabilitas).</li>
-                        <li><strong>Pemantik:</strong> Memutar "Video Intro: Keajaiban Alam Jatim" lalu bertanya, <em>"Pernahkah kalian melihat kejadian hujan lebat yang membuat genangan air?"</em></li>
+                        <li><strong>Kondisioning:</strong> Guru menyapa, memastikan kelas inklusif dan ramah anak disabilitas.</li>
+                        <li><strong>Pemantik:</strong> Memutar video intro lalu bertanya jawab seputar cuaca atau kejadian alam di sekitar Jawa Timur.</li>
                     </ul>
                     <h4>2. Kegiatan Inti (20 Menit)</h4>
                     <ul>
-                        <li><strong>Kolaborasi:</strong> Siswa dibagi menjadi kelompok berpasangan secara heterogen.</li>
-                        <li><strong>Eksplorasi Misi:</strong> Kelompok membaca "Pojok Literasi" terkait bencana, mengidentifikasi hubungan sebab-akibat dengan perubahan iklim.</li>
-                        <li><strong>Evaluasi Interaktif:</strong> Siswa mengerjakan mini-game/kuis bersama-sama.</li>
+                        <li><strong>Kolaborasi:</strong> Siswa membaca "Pojok Literasi" secara mandiri atau berpasangan.</li>
+                        <li><strong>Aksi & Kuis:</strong> Siswa menyelesaikan mini-game interaktif serta mengisi bagian <em>Refleksi: Aku Tahu</em>.</li>
                     </ul>
                     <h4>3. Penutup (10 Menit)</h4>
                     <ul>
-                        <li><strong>Refleksi & Aksi:</strong> Setiap siswa memikirkan tindakan nyata yang diisikan pada fitur "Aksi Kecilku".</li>
-                        <li><strong>Apresiasi:</strong> Guru memberikan umpan balik positif terhadap keberhasilan kelompok.</li>
+                        <li><strong>Refleksi & Aksi:</strong> Siswa menuliskan komitmen pada "Aksi Kecilku Minggu Ini".</li>
                     </ul>
                 </div>
+
+                <div style="background: rgba(16, 185, 129, 0.08); padding: 16px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary);">
+                    <h3>📝 Kotak Masukan & Evaluasi Pengguna</h3>
+                    <p>Apakah Anda guru, pengamat, atau juri yang sedang menguji coba portal ini? Bantu kami menyempurnakannya dengan mengisi formulir tanggapan melalui link Google Form berikut:</p>
+                    <a href="https://forms.gle/MEEydkJiZtNqbSn96" target="_blank" class="btn" style="margin-top: 10px;">📋 Isi Google Form Masukan & Evaluasi</a>
+                </div>
             </div>
+            
             <div class="card">
                 <h2>📶 Panduan Offline (Satu Berkas)</h2>
-                <p>File HTML ini dirancang mandiri tanpa memanggil pustaka eksternal. Guru dapat membagikan file ini via flashdisk. Seluruh teks literasi dan kuis akan berjalan sempurna tanpa internet.</p>
+                <p>File HTML ini dirancang mandiri tanpa memanggil pustaka eksternal. Guru dapat membagikan file ini via flashdisk. Seluruh teks literasi dan kuis berjalan sempurna tanpa internet.</p>
             </div>
         </section>
 
@@ -363,21 +380,21 @@
         <section id="tentang" class="view-section">
             <div class="card">
                 <h2>ℹ️ Tentang Portal JTB & Hak Cipta</h2>
-                <p>Portal ini dikembangkan khusus untuk <em>Climate Change Learning Kit 2026</em>.</p>
+                <p>Portal edukasi mitigasi bencana ini dikembangkan khusus untuk <em>Climate Change Learning Kit 2026</em>.</p>
                 
                 <div style="background: rgba(16, 185, 129, 0.08); padding: 20px; border-radius: 8px; margin: 15px 0; overflow: hidden;">
                     <img src="Ernaz_Siswanto-removebg-preview-removebg-preview.png" alt="Foto Ernaz Siswanto" style="width: 110px; height: auto; border-radius: 8px; float: left; margin-right: 20px; border: 2px solid var(--primary);">
                     <h3 style="margin-top: 0;">👨‍💻 Pengembang: Ernaz Siswanto, S.Pd., M.Pd.</h3>
-                    <p>Kepala SDN Tulungrejo 03 Kota Batu. Beliau adalah pegiat literasi, penulis buku pendidikan, dan motor penggerak sekolah inklusif yang aman dari kekerasan (Kombel Estuga).</p>
+                    <p>Kepala SDN Tulungrejo 03 Kota Batu. Pegiat literasi, penulis buku pendidikan, dan motor penggerak sekolah inklusif yang aman dari kekerasan (Kombel Estuga).</p>
                     <div style="clear: both;"></div>
                 </div>
 
                 <h3>🛡️ Hak Cipta & Lisensi Edukasi (Open Source)</h3>
-                <p>Sebagai bentuk dedikasi untuk pendidikan Indonesia, inovasi digital ini dirilis di bawah lisensi <strong>Creative Commons (CC BY-NC-SA 4.0)</strong>. Artinya:<br>
+                <p>Dirilis di bawah lisensi <strong>Creative Commons (CC BY-NC-SA 4.0)</strong>:<br>
                 ✅ <strong>Boleh ditiru dan dimodifikasi</strong> oleh sekolah manapun.<br>
                 ❌ <strong>Tidak boleh dikomersialkan</strong> (diperjualbelikan).<br>
                 ✍️ <strong>Wajib mencantumkan nama pengembang asli</strong> saat memodifikasinya.</p>
-                <p><em>*Aplikasi ini 100% diprogram manual tanpa bantuan pembuatan kode otomatis oleh AI Generatif.</em></p>
+                <p style="margin-top: 10px;"><em>*Aplikasi ini 100% diprogram manual tanpa bantuan pembuatan kode otomatis oleh AI Generatif.</em></p>
             </div>
         </section>
     </div>
@@ -566,9 +583,17 @@
                         <div id="feedback-${m.id}" class="feedback"></div>
                     </div>
 
+                    <div class="reflection-box" id="reflection-area-${m.id}">
+                        <h3>🧠 Refleksi: Hari Ini Aku Tahu...</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Tuliskan hal paling penting atau pelajaran baru yang kamu dapatkan dari misi ini:</p>
+                        <textarea id="reflection-input-${m.id}" placeholder="Contoh: Hari ini aku tahu cara kerja akar pohon menahan longsor..." style="width:100%; height:80px; padding:10px; border-radius:6px; border:1px solid var(--border); margin-bottom:8px;"></textarea>
+                        <button class="btn" onclick="saveReflection('${m.id}')" style="background: var(--secondary);">💾 Simpan Refleksi</button>
+                        <p id="reflection-saved-${m.id}" style="margin-top:6px; font-weight:600; color:var(--secondary); font-size:0.9rem;"></p>
+                    </div>
+
                     <div class="action-pledge" id="pledge-area-${m.id}" style="display:none;">
                         <h3>🌟 Aksi Kecilku Minggu Ini</h3>
-                        <input type="text" id="pledge-input-${m.id}" placeholder="Tulis aksi nyatamu di sini..." style="width:100%; padding:10px; margin-bottom:10px;">
+                        <input type="text" id="pledge-input-${m.id}" placeholder="Tulis aksi nyatamu di sini..." style="width:100%; padding:10px; margin-bottom:10px; border-radius:6px; border:1px solid var(--border);">
                         <button class="btn" onclick="savePledge('${m.id}')">💾 Simpan Janji Aksiku</button>
                         <p id="pledge-saved-${m.id}" style="margin-top:8px; font-weight:600; color:var(--primary);"></p>
                     </div>
@@ -580,6 +605,10 @@
                 document.getElementById('pledge-area-' + id).style.display = 'block';
                 document.getElementById('pledge-input-' + id).value = localStorage.getItem('pledge_' + id);
                 document.getElementById('pledge-saved-' + id).innerText = '✅ Tersimpan di perangkat.';
+            }
+            if(localStorage.getItem('reflection_' + id)) {
+                document.getElementById('reflection-input-' + id).value = localStorage.getItem('reflection_' + id);
+                document.getElementById('reflection-saved-' + id).innerText = '✅ Refleksi tersimpan di perangkat.';
             }
             window.scrollTo(0,0);
         }
@@ -603,6 +632,11 @@
         function savePledge(mid) {
             const v = document.getElementById('pledge-input-' + mid).value;
             if(v) { localStorage.setItem('pledge_' + mid, v); document.getElementById('pledge-saved-' + mid).innerText = '✅ Janji aksi berhasil disimpan!'; }
+        }
+
+        function saveReflection(mid) {
+            const v = document.getElementById('reflection-input-' + mid).value;
+            if(v) { localStorage.setItem('reflection_' + mid, v); document.getElementById('reflection-saved-' + mid).innerText = '✅ Refleksi berhasil disimpan!'; }
         }
 
         function updateBadgeCount() {
