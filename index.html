@@ -89,12 +89,12 @@
             justify-content: center;
             gap: 6px;
             text-decoration: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        button:hover, .btn:hover { opacity: 0.9; }
+        button:hover, .btn:hover { opacity: 0.9; transform: translateY(-1px); }
         button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-        /* Header Image Banner */
         header {
             width: 100%;
             background: #0f172a;
@@ -152,7 +152,8 @@
         }
 
         .view-section { display: none; }
-        .view-section.active { display: block; }
+        .view-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
         .card {
             background: var(--card-bg);
@@ -162,6 +163,9 @@
             margin-bottom: 20px;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
+
+        #welcome-screen { text-align: center; padding: 40px 20px; }
+        #player-name { font-size: 1.2rem; padding: 12px; border: 2px solid var(--primary); border-radius: 8px; width: 100%; max-width: 350px; margin-bottom: 15px; text-align: center; background: var(--card-bg); color: var(--text-main); }
 
         .mission-grid {
             display: grid;
@@ -177,11 +181,15 @@
             padding: 20px;
             text-align: center;
             cursor: pointer;
+            position: relative;
             transition: transform 0.2s, border-color 0.2s;
         }
 
         .mission-card:hover { transform: translateY(-4px); border-color: var(--primary); }
+        .mission-card.locked { opacity: 0.6; cursor: not-allowed; background: #e2e8f0; border-color: #cbd5e1; }
+        .mission-card.locked:hover { transform: none; }
         .mission-icon { font-size: 3rem; margin-bottom: 10px; }
+        .lock-icon { position: absolute; top: 12px; right: 12px; font-size: 1.3rem; }
 
         .video-container {
             position: relative;
@@ -191,6 +199,7 @@
             border-radius: 8px;
             overflow: hidden;
             margin: 15px 0;
+            border: 3px solid var(--primary);
         }
 
         .video-poster {
@@ -205,20 +214,19 @@
         }
 
         .video-poster::after {
-            content: '▶';
-            font-size: 3rem;
+            content: '▶ Putar Video';
+            font-size: 1rem;
+            font-weight: bold;
             color: white;
-            background: rgba(0,0,0,0.6);
-            width: 80px; height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: rgba(0,0,0,0.7);
+            padding: 10px 20px;
+            border-radius: 30px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 2px solid white;
             transition: transform 0.2s;
         }
 
-        .video-poster:hover::after { transform: scale(1.1); }
+        .video-poster:hover::after { transform: scale(1.08); background: var(--primary); }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
         .literacy-panel {
@@ -239,6 +247,16 @@
             margin: 15px 0;
         }
 
+        .siaga-box {
+            background: #fee2e2;
+            border: 2px dashed #ef4444;
+            padding: 15px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            color: #991b1b;
+            font-weight: bold;
+        }
+
         .game-box {
             background: rgba(59, 130, 246, 0.05);
             border: 2px dashed var(--secondary);
@@ -247,19 +265,22 @@
             margin-top: 20px;
         }
 
-        .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-        .quiz-btn {
-            background: var(--card-bg); color: var(--text-main);
-            border: 2px solid var(--border); justify-content: flex-start;
-            padding: 12px 16px; text-align: left; font-weight: normal;
-        }
-        .quiz-btn:hover { border-color: var(--secondary); background: rgba(59, 130, 246, 0.1); }
+        .q-card { background: var(--card-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--border); }
+        .q-card label { display: block; padding: 10px; border: 2px solid var(--border); border-radius: 6px; margin-top: 8px; cursor: pointer; font-weight: 500; }
+        .q-card label:hover { background: rgba(59,130,246,0.08); border-color: var(--secondary); }
+        .q-card input[type="radio"] { transform: scale(1.2); margin-right: 10px; }
 
-        .feedback { margin-top: 15px; padding: 12px; border-radius: 8px; font-weight: 600; display: none; }
+        .feedback { margin-top: 15px; padding: 12px; border-radius: 8px; font-weight: 600; display: none; text-align: center; }
         .feedback.success { background: #d1fae5; color: #065f46; border: 1px solid #10b981; display: block; }
         .feedback.error { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; display: block; }
 
-        .action-pledge, .reflection-box { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--border); padding: 15px; border-radius: 8px; }
+        .reflection-box, .action-pledge { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--border); padding: 15px; border-radius: 8px; }
+
+        /* Modal Sertifikat */
+        #cert-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; }
+        .cert-content { background: #ffffff; color: #1e293b; width: 90%; max-width: 750px; padding: 40px; border-radius: 16px; text-align: center; border: 10px solid var(--accent); position: relative; }
+        .cert-content h1 { color: var(--primary-dark); font-size: 2.3rem; margin: 15px 0; font-family: 'Georgia', serif; }
+        .cert-content h2 { color: var(--accent); font-size: 1.4rem; margin-bottom: 15px; }
 
         footer {
             text-align: center;
@@ -279,9 +300,15 @@
         }
         .rpp-box ul { padding-left: 20px; margin-bottom: 15px; }
 
-        .badge-list { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-        .badge-item { background: #e2e8f0; color: #475569; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; }
+        .badge-item { background: #e2e8f0; color: #475569; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; display: inline-block; }
         .badge-item.earned { background: var(--accent); color: white; }
+
+        @media print {
+            body * { visibility: hidden; }
+            #cert-modal, #cert-modal * { visibility: visible; }
+            #cert-modal { position: absolute; left: 0; top: 0; width: 100%; background: white; border: 5px solid black; }
+            .no-print { display: none !important; }
+        }
     </style>
 </head>
 <body data-theme="light" data-contrast="normal" data-font="medium">
@@ -290,12 +317,12 @@
     <div class="accessibility-bar no-print">
         <div class="a11y-controls">
             <span>⚙️ Aksesibilitas:</span>
-            <button onclick="adjustFontSize(1)" aria-label="Perbesar ukuran huruf">A+</button>
-            <button onclick="adjustFontSize(-1)" aria-label="Perkecil ukuran huruf">A-</button>
-            <button onclick="toggleContrast()" aria-label="Ubah kontras warna">Kontras Tinggi</button>
+            <button onclick="adjustFontSize(1)" aria-label="Perbesar huruf">A+</button>
+            <button onclick="adjustFontSize(-1)" aria-label="Perkecil huruf">A-</button>
+            <button onclick="toggleContrast()" aria-label="Kontras Tinggi">Kontras</button>
         </div>
         <div>
-            <span>🏆 Lencana: <strong id="badge-count">0</strong>/6</span>
+            <span>👤 Halo, <strong id="user-display">Pejuang Bumi</strong>! | 🏆 Lencana: <strong id="badge-count">0</strong>/6</span>
         </div>
     </div>
 
@@ -304,38 +331,55 @@
         <span>🚨 DARURAT NASIONAL: <strong>112</strong></span> | <span>SAR: <strong>115</strong></span> | <span>BMKG: <strong>196</strong></span>
     </div>
 
-    <!-- Header Banner Gambar Utama -->
-    <header>
-        <img src="image_dd4b21.jpg" alt="Portal Jatim Tangguh Bencana Header">
+    <!-- Header Banner -->
+    <header class="no-print">
+        <img src="image_dd4b21.jpg" alt="Portal Jatim Tangguh Bencana Header" onerror="this.src='https://via.placeholder.com/1000x250?text=Portal+Jatim+Tangguh+Bencana'">
     </header>
 
     <!-- Navigasi Utama -->
     <nav class="no-print">
-        <a href="#beranda" onclick="showView('beranda')" class="active" id="nav-beranda">🏠 Beranda</a>
+        <a href="#beranda" onclick="showView('beranda')" class="active" id="nav-beranda">🏠 Beranda & Misi</a>
         <a href="#guru" onclick="showView('guru')" id="nav-guru">👩‍🏫 Ruang Guru</a>
         <a href="#tentang" onclick="showView('tentang')" id="nav-tentang">ℹ️ Tentang Portal</a>
     </nav>
 
     <div class="container">
+        <!-- WELCOME SCREEN (LOGIN USERNAME) -->
+        <section id="welcome-screen" class="view-section active">
+            <div class="card" style="border: 3px solid var(--primary);">
+                <h1 style="color: var(--primary-dark); font-size: 2rem; margin-bottom: 10px;">Selamat Datang, Pejuang Bumi! 🌍</h1>
+                <p style="font-size: 1.1rem; margin-bottom: 20px; color: var(--text-muted);">Portal Interaktif Mitigasi Bencana & Edukasi Iklim Fase B & C (Kelas 3–6 SD/MI).</p>
+                <p style="margin-bottom: 10px; font-weight: bold;">Sebelum memulai petualangan, siapakah nama lengkapmu?</p>
+                <input type="text" id="player-name" placeholder="Ketik nama lengkapmu di sini..." required>
+                <br>
+                <button class="btn" onclick="loginPlayer()">Mulai Petualangan 🚀</button>
+            </div>
+        </section>
+
         <!-- BERANDA -->
-        <section id="beranda" class="view-section active">
+        <section id="beranda" class="view-section">
             <div class="card">
-                <h2>Selamat Datang, Pejuang Bumi Cilik! 👋</h2>
-                <p>Portal pembelajaran interaktif khusus untuk <strong>Fase B & C (Kelas 3–6 Sekolah Dasar / MI)</strong>. Mari belajar bersama Siti, Budi, Rian (teman kita yang mandiri dengan kursi roda), dan Tiara (teman kita yang hebat dengan bahasa isyarat) dalam menjelajahi alam Jawa Timur serta siaga menghadapi bencana!</p>
+                <h2>Peta Petualangan & Misi Interaktif 🗺️</h2>
+                <p>Selesaikan 6 level misi secara berurutan. Baca kisah literasinya, tonton videonya, dan jawab kuisnya dengan benar untuk membuka gembok level berikutnya serta meraih sertifikat kelulusan!</p>
+                
+                <!-- Video Intro -->
                 <div class="video-container" id="vid-wrap-intro">
-                    <div class="video-poster" style="background-image: url('https://img.youtube.com/vi/EnkdippnqI8/hqdefault.jpg');" onclick="loadVideo('intro', 'EnkdippnqI8')"></div>
+                    <div class="video-poster" style="background-image: url('https://img.youtube.com/vi/EnkdippnqI8/hqdefault.jpg');" onclick="loadYouTube('intro', 'EnkdippnqI8')"></div>
+                </div>
+                <div style="text-align: right; margin-top: 5px; margin-bottom: 20px;" class="no-print">
+                    <a href="https://www.youtube.com/watch?v=EnkdippnqI8" target="_blank" style="font-size: 0.85rem; color: var(--primary-dark); text-decoration: underline;">🔗 Buka Video Intro di YouTube (Jika Terkendala)</a>
                 </div>
             </div>
 
             <div class="card">
-                <h2>Pilih Misi Pembelajaran & Aksi Iklim</h2>
+                <h2>Daftar Misi Mitigasi Bencana</h2>
                 <div class="mission-grid" id="mission-grid-container"></div>
             </div>
         </section>
 
         <!-- DETAIL MISI -->
         <section id="misi-detail" class="view-section">
-            <button class="no-print" onclick="showView('beranda')" style="margin-bottom: 15px;">← Kembali ke Beranda</button>
+            <button class="btn no-print" onclick="showView('beranda')" style="margin-bottom: 15px; background:var(--text-muted);">⬅️ Kembali ke Peta Misi</button>
             <div id="mission-content-area"></div>
         </section>
 
@@ -343,36 +387,32 @@
         <section id="guru" class="view-section">
             <div class="card">
                 <h2>👩‍🏫 Ruang Guru & Fasilitator</h2>
-                <p>Modul interaktif ini dirancang optimal untuk siswa <strong>Fase B & C (Kelas 3–6 SD/MI)</strong> guna mendukung pembelajaran berdiferensiasi dan inklusif (GEDSI), serta sangat cocok diimplementasikan pada kegiatan <strong>Proyek Penguatan Profil Pelajar Pancasila (P5)</strong> tema Gaya Hidup Berkelanjutan.</p>
+                <p>Modul interaktif versi <strong>Gamifikasi Berjenjang (Leveling)</strong> ini dirancang untuk memicu motivasi belajar siswa Fase B & C melalui pendekatan tantangan dan reward (sertifikat). Sangat cocok diimplementasikan pada kegiatan <strong>kokurikuler ataupun Proyek Penguatan Profil Pelajar Pancasila (P5)</strong> tema Gaya Hidup Berkelanjutan.</p>
                 
                 <div class="rpp-box">
                     <h3>📋 Skenario Pembelajaran Singkat (RPP 40 Menit)</h3>
                     <h4>1. Pendahuluan (10 Menit)</h4>
                     <ul>
                         <li><strong>Kondisioning:</strong> Guru menyapa, memastikan kelas inklusif dan ramah anak disabilitas.</li>
-                        <li><strong>Pemantik:</strong> Memutar video intro lalu bertanya jawab seputar cuaca atau kejadian alam di sekitar Jawa Timur.</li>
+                        <li><strong>Pemantik:</strong> Memutar video intro lalu bertanya jawab seputar kejadian alam di Jawa Timur.</li>
                     </ul>
                     <h4>2. Kegiatan Inti (20 Menit)</h4>
                     <ul>
-                        <li><strong>Kolaborasi:</strong> Siswa membaca "Pojok Literasi" secara mandiri atau berpasangan.</li>
-                        <li><strong>Aksi & Kuis:</strong> Siswa menyelesaikan mini-game interaktif serta mengisi bagian <em>Refleksi: Aku Tahu</em>.</li>
+                        <li><strong>Kolaborasi:</strong> Siswa memasukkan nama profil dan membaca "Pojok Literasi" secara mandiri/berpasangan.</li>
+                        <li><strong>Aksi & Kuis:</strong> Siswa menonton video mandiri karya guru dan menyelesaikan 5 soal uji tangkas untuk membuka gembok level.</li>
                     </ul>
                     <h4>3. Penutup (10 Menit)</h4>
                     <ul>
-                        <li><strong>Refleksi & Aksi:</strong> Siswa menuliskan komitmen pada "Aksi Kecilku Minggu Ini".</li>
+                        <li><strong>Refleksi & Penghargaan:</strong> Siswa mencetak sertifikat resmi saat seluruh level selesai.</li>
                     </ul>
                 </div>
 
                 <div style="background: rgba(16, 185, 129, 0.08); padding: 16px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--primary);">
                     <h3>📝 Kotak Masukan & Evaluasi Pengguna</h3>
-                    <p>Apakah Anda guru, pengamat, atau juri yang sedang menguji coba portal ini? Bantu kami menyempurnakannya dengan mengisi formulir tanggapan melalui link Google Form berikut:</p>
+                    <p>Bantu kami menyempurnakan inovasi ini. Silakan isi form evaluasi melalui tautan berikut:</p>
                     <a href="https://forms.gle/MEEydkJiZtNqbSn96" target="_blank" class="btn" style="margin-top: 10px;">📋 Isi Google Form Masukan & Evaluasi</a>
                 </div>
-            </div>
-            
-            <div class="card">
-                <h2>📶 Panduan Offline (Satu Berkas)</h2>
-                <p>File HTML ini dirancang mandiri tanpa memanggil pustaka eksternal. Guru dapat membagikan file ini via flashdisk. Seluruh teks literasi dan kuis berjalan sempurna tanpa internet.</p>
+                <button class="btn" onclick="resetProgress()" style="background: #dc2626; margin-top: 20px;">🔄 Ganti Nama / Reset Data Siswa</button>
             </div>
         </section>
 
@@ -394,149 +434,178 @@
                 ✅ <strong>Boleh ditiru dan dimodifikasi</strong> oleh sekolah manapun.<br>
                 ❌ <strong>Tidak boleh dikomersialkan</strong> (diperjualbelikan).<br>
                 ✍️ <strong>Wajib mencantumkan nama pengembang asli</strong> saat memodifikasinya.</p>
-                <p style="margin-top: 10px;"><em>*Aplikasi ini 100% aman, tidak menyimpan data pengguna.</em></p>
+                <p style="margin-top: 10px;"><em>*Aplikasi ini 100% aman dan dirancang mandiri tanpa bantuan AI generatif dalam penyusunan narasi literasi.</em></p>
             </div>
         </section>
     </div>
 
+    <!-- MODAL SERTIFIKAT KELULUSAN -->
+    <div id="cert-modal">
+        <div class="cert-content">
+            <h2>🏅 PENGHARGAAN KELULUSAN RESMI 🏅</h2>
+            <h1>SERTIFIKAT PEJUANG BUMI</h1>
+            <p style="font-size: 1.1rem; color: #475569;">Diberikan dengan bangga kepada:</p>
+            <h1 id="cert-name-display" style="color: #2563eb; font-size: 2.8rem; text-decoration: underline; text-underline-offset: 8px; margin: 15px 0;">NAMA SISWA</h1>
+            <p style="font-size: 1.050rem; line-height: 1.6;">Telah berhasil menuntaskan <strong>6 Level Misi Literasi & Kesiapsiagaan Bencana</strong><br>di Portal Jatim Tangguh Bencana (JTB).</p>
+            <p style="margin-top: 25px; font-weight: bold; font-size: 0.95rem;">Ernaz Siswanto, S.Pd., M.Pd.<br><span style="font-weight: normal; color: #64748b;">Kepala SDN Tulungrejo 03 Kota Batu / Pengembang Portal</span></p>
+            
+            <div class="no-print" style="margin-top: 25px; display: flex; justify-content: center; gap: 15px;">
+                <button class="btn" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+                <button class="btn" style="background:#64748b;" onclick="closeCert()">Tutup</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
-        &copy; 2026 Ernaz Siswanto, S.Pd., M.Pd. (SDN Tulungrejo 03 Kota Batu).<br>
+        © 2026 Ernaz Siswanto, S.Pd., M.Pd. (SDN Tulungrejo 03 Kota Batu).<br>
         Bebas digunakan untuk tujuan pendidikan (Lisensi CC BY-NC-SA).
     </footer>
 
     <script>
         const missions = [
             {
-                id: 'longsor',
-                title: 'Tanah Longsor',
-                icon: '⛰️',
-                desc: 'Mengenal risiko lereng curam dan pentingnya akar pepohonan.',
+                id: 'longsor', title: 'Tanah Longsor', icon: '⛰️',
+                desc: 'Level 1: Mengenal risiko lereng curam dan pentingnya akar pepohonan.',
                 video: 'o7xGOXfCupY',
                 literacy: "Hujan turun sangat deras sejak sore menyelimuti lereng Gunung Panderman di Kota Batu. Siti, yang tinggal tak jauh dari area tebing, mengingat pesan gurunya. 'Tanah yang banyak menyerap air bisa gembur dan merosot,' gumamnya. Pak RT membunyikan kentongan agar warga bersiap ke titik aman. Beruntung, warga sudah menanam pohon vetiver berakar panjang di lereng tersebut, sehingga longsoran tertahan dan tidak mengenai rumah.",
+                siaga: "1. Jauhi retakan tebing saat hujan deras.<br>2. Cari tempat evakuasi yang datar dan kokoh.<br>3. Laporkan segera kepada petugas desa/guru.",
                 climate: "Suhu bumi yang menghangat menghasilkan awan hujan tebal. Hujan ekstrem inilah yang makin sering memicu pergerakan tanah pada lereng yang gundul.",
-                game: {
-                    question: "Mengapa menanam pohon seperti vetiver di lereng bukit sangat penting untuk mencegah longsor?",
-                    options: [
-                        "A. Karena daunnya yang rimbun menghalangi air hujan.",
-                        "B. Karena akarnya yang kuat berfungsi mengikat tanah agar tidak mudah luruh.",
-                        "C. Karena pohon bisa menjadi tempat berlindung."
-                    ],
-                    correct: 1,
-                    explanation: "Tepat sekali! Akar pepohonan bertindak seperti jaring alami yang mencengkeram tanah."
-                }
+                game: [
+                    { q: "Mengapa menanam pohon seperti vetiver di lereng bukit sangat penting untuk mencegah longsor?", options: ["Karena daunnya yang rimbun menghalangi air hujan.", "Karena akarnya yang kuat berfungsi mengikat tanah agar tidak mudah luruh.", "Karena pohon bisa menjadi tempat berlindung."], correct: 1 },
+                    { q: "Kamu melihat retakan baru di tebing ketika hujan deras. Apa tindakan paling aman?", options: ["Mendekat untuk memotret", "Menjauh dan segera melapor kepada orang dewasa", "Menutup retakan dengan tanah"], correct: 1 },
+                    { q: "Apa peran akar tanaman di lereng?", options: ["Membuat tanah selalu kering", "Membuat hujan berhenti", "Membantu mengikat tanah dan mengurangi erosi"], correct: 2 },
+                    { q: "Mengapa hujan berkepanjangan dapat meningkatkan risiko longsor?", options: ["Tanah dapat menjadi jenuh air dan kurang stabil", "Semua batu berubah menjadi pasir", "Gravitasi berhenti bekerja"], correct: 0 },
+                    { q: "Saat melihat longsoran mulai bergerak, apa yang harus dilakukan?", options: ["Berlari mendekati longsoran", "Menjauh dari jalur longsoran dan mencari tempat aman", "Berdiri di bawah tebing"], correct: 1 }
+                ]
             },
             {
-                id: 'banjir',
-                title: 'Banjir Permukiman',
-                icon: '🌊',
-                desc: 'Mengenal akibat sumbatan air dan aksi memilah sampah.',
+                id: 'banjir', title: 'Banjir Permukiman', icon: '🌊',
+                desc: 'Level 2: Mengenal akibat sumbatan air dan aksi memilah sampah.',
                 video: 'yDb49vu5Tsk',
-                literacy: "Sore itu, air mulai menggenangi jalanan alun-alun. Rian, dari atas kursi rodanya, melihat air selokan meluap membawa bungkus plastik jajanan. 'Airnya tersumbat sampah!' isyarat Rian kepada Tiara yang tunarungu. Setelah air surut, Rian dengan tongkat penjepitnya mengait sampah botol dari pinggir selokan, sementara Tiara menampungnya. Aksi dua sahabat ini menginspirasi warga untuk ikut bekerja bakti.",
+                literacy: "Sore itu, air mulai menggenang di jalanan. Rian, dari atas kursi rodanya, melihat air selokan meluap membawa bungkus plastik jajanan. 'Airnya tersumbat sampah!' isyarat Rian kepada Tiara yang tunarungu. Setelah air surut, Rian dengan tongkat penjepitnya mengait sampah botol dari pinggir selokan, sementara Tiara menampungnya. Aksi dua sahabat ini menginspirasi warga untuk ikut bekerja bakti.",
+                siaga: "1. Jauhi genangan banjir berarus deras.<br>2. Hindari tiang atau kabel listrik yang terendam.<br>3. Jangan bermain di saluran air kotor.",
                 climate: "Perubahan iklim membuat pola hujan tidak menentu. Saat volume hujan sangat tinggi bertemu selokan yang penuh plastik, genangan banjir tak bisa dihindari.",
-                game: {
-                    question: "Apa pesan moral yang bisa kita petik dari tindakan Rian dan Tiara?",
-                    options: [
-                        "A. Keterbatasan fisik bukan halangan untuk peduli pada lingkungan.",
-                        "B. Membersihkan selokan adalah tugas anak-anak saja.",
-                        "C. Menunggu petugas kebersihan datang adalah cara terbaik."
-                    ],
-                    correct: 0,
-                    explanation: "Sangat benar! Siapapun bisa menjadi pahlawan lingkungan dimulai dari hal kecil."
-                }
+                game: [
+                    { q: "Apa pesan moral yang bisa kita petik dari tindakan Rian dan Tiara?", options: ["Keterbatasan fisik bukan halangan untuk peduli pada lingkungan.", "Membersihkan selokan adalah tugas anak-anak saja.", "Menunggu petugas kebersihan datang adalah cara terbaik."], correct: 0 },
+                    { q: "Selokan sekolah meluap saat hujan. Apa tindakan awal yang tepat?", options: ["Masuk ke selokan untuk mengambil sampah", "Melapor kepada guru atau petugas dan menjauhi genangan", "Bermain perahu di air luapan"], correct: 1 },
+                    { q: "Mengapa sampah plastik tidak boleh dibuang ke selokan?", options: ["Dapat menyumbat aliran air dan memperparah genangan", "Dapat menghentikan hujan", "Dapat membuat air menguap"], correct: 0 },
+                    { q: "Mana tindakan yang membantu mengurangi limpasan air hujan?", options: ["Menutup semua tanah dengan semen", "Membuang sampah ke sungai", "Menjaga ruang terbuka hijau dan area resapan"], correct: 2 },
+                    { q: "Kamu melihat kabel listrik jatuh di dekat genangan banjir. Apa yang harus dilakukan?", options: ["Mendekati kabel untuk memindahkannya", "Menjauh, memperingatkan orang lain, dan segera melapor", "Menyentuh air untuk memeriksa arus"], correct: 1 }
+                ]
             },
             {
-                id: 'karhutla',
-                title: 'Kebakaran Hutan (Karhutla)',
-                icon: '🔥',
-                desc: 'Bahaya kemarau panjang dan menjaga hutan agar tetap asri.',
+                id: 'karhutla', title: 'Kebakaran Hutan (Karhutla)', icon: '🔥',
+                desc: 'Level 3: Bahaya kemarau panjang dan menjaga hutan agar tetap asri.',
                 video: 'lyXfN2KOAWc',
                 literacy: "Angin kemarau berhembus kering di punggung Gunung Arjuno. Budi yang sedang berkemah melihat pendaki dewasa meninggalkan sisa perapian yang berasap. Tahu bahwa satu percikan bisa membakar belasan hektar hutan, Budi segera menyiram bara api itu dengan sisa air minumnya lalu menutupnya dengan tanah. Hutan yang aman berawal dari kepedulian kecil kita.",
+                siaga: "1. Jangan nyalakan api unggun sembarangan di hutan.<br>2. Laporkan segera jika melihat titik asap/api.<br>3. Gunakan masker jika kabut asap mulai pekat.",
                 climate: "Suhu udara global yang panas memperpanjang musim kemarau. Daun di hutan menjadi sangat kering seperti kayu bakar yang siap menyala oleh percikan api kecil.",
-                game: {
-                    question: "Apa alasan Budi menyiram sisa perapian hingga benar-benar padam lalu menutupnya dengan tanah?",
-                    options: [
-                        "A. Agar tanah di sekitarnya menjadi subur.",
-                        "B. Mencegah sisa bara tertiup angin dan membakar daun kering.",
-                        "C. Karena air sisa di botol minumnya sudah tidak segar."
-                    ],
-                    correct: 1,
-                    explanation: "Benar! Bara api yang terselubung angin di musim kemarau adalah penyebab utama kebakaran."
-                }
+                game: [
+                    { q: "Apa alasan Budi menyiram sisa perapian hingga benar-benar padam lalu menutupnya dengan tanah?", options: ["Agar tanah di sekitarnya menjadi subur.", "Mencegah sisa bara tertiup angin dan membakar daun kering.", "Karena air sisa di botol minumnya sudah tidak segar."], correct: 1 },
+                    { q: "Kamu melihat api mulai membesar di kawasan hutan. Apa yang paling aman?", options: ["Mendekat untuk merekam video", "Menjauh melalui jalur aman dan melapor kepada petugas", "Menyembunyikan kejadian"], correct: 1 },
+                    { q: "Mengapa ranting dan daun kering mudah terbakar?", options: ["Karena kandungan airnya cenderung rendah", "Karena tidak membutuhkan oksigen", "Karena selalu mengandung bahan kimia"], correct: 0 },
+                    { q: "Apa yang dapat dilakukan untuk mencegah kebakaran hutan?", options: ["Membakar sampah saat angin kencang", "Meninggalkan api unggun menyala", "Tidak menyalakan api sembarangan"], correct: 2 },
+                    { q: "Apa bahaya utama asap kebakaran bagi manusia?", options: ["Membuat udara selalu lebih bersih", "Mengganggu pernapasan karena partikel dan gas", "Membuat tubuh kebal penyakit"], correct: 1 }
+                ]
             },
             {
-                id: 'hematair',
-                title: 'Hemat Air di Musim Kemarau',
-                icon: '💧',
-                desc: 'Mengelola siklus air dan bijak memakai air bersih di rumah.',
+                id: 'hematair', title: 'Hemat Air di Musim Kemarau', icon: '💧',
+                desc: 'Level 4: Mengelola siklus air dan bijak memakai air bersih di rumah.',
                 video: 'XoZgkot5vOc',
                 literacy: "Kemarau panjang membuat sumur rumah Siti menyusut. Ibu Siti kini menampung air bekas cucian beras ke dalam ember. Pada sore harinya, Siti menggunakan air tersebut untuk menyiram tanaman apotek hidup. Saat menyikat gigi, Siti juga selalu menutup keran rapat-rapat. Ia sadar, setiap tetes air bersih sangat berharga demi masa depan.",
+                siaga: "1. Matikan keran saat tidak digunakan.<br>2. Tampung air hujan atau bekas cucian untuk tanaman.<br>3. Gunakan air secara bijak dan hemat.",
                 climate: "Pemanasan global mengacaukan siklus air. Penguapan air terjadi sangat cepat saat kemarau sehingga cadangan air tanah menipis drastis.",
-                game: {
-                    question: "Dari cerita Siti, contoh pemanfaatan ulang (reuse) air yang paling tepat adalah...",
-                    options: [
-                        "A. Menggunakan air bekas cucian piring untuk mencuci motor.",
-                        "B. Memakai air matang yang direbus untuk tanaman.",
-                        "C. Menggunakan air bekas cucian sayur/beras untuk menyiram tanaman."
-                    ],
-                    correct: 2,
-                    explanation: "Hebat! Air bekas cucian beras sangat ramah lingkungan dan bernutrisi untuk tanaman."
-                }
+                game: [
+                    { q: "Dari cerita Siti, contoh pemanfaatan ulang (reuse) air yang paling tepat adalah...", options: ["Menggunakan air bekas cucian piring untuk mencuci motor.", "Memakai air matang yang direbus untuk tanaman.", "Menggunakan air bekas cucian sayur/beras untuk menyiram tanaman."], correct: 2 },
+                    { q: "Apa tindakan hemat air saat menggosok gigi?", options: ["Membiarkan keran terus menyala", "Membuka keran sebesar-besarnya", "Mematikan keran ketika tidak digunakan"], correct: 2 },
+                    { q: "Bagaimana air hujan dapat dimanfaatkan?", options: ["Ditampung dengan benar untuk menyiram tanaman", "Langsung diminum tanpa pemeriksaan", "Dicampur bahan kimia agar lebih bersih"], correct: 0 },
+                    { q: "Apa yang dapat terjadi ketika kemarau berlangsung lama?", options: ["Semua sungai pasti bertambah besar", "Persediaan air dapat berkurang", "Air tanah selalu bertambah"], correct: 1 },
+                    { q: "Mengapa daerah resapan air perlu dijaga?", options: ["Agar semua air langsung mengalir ke jalan", "Agar tanah selalu tertutup semen", "Untuk membantu air meresap ke dalam tanah"], correct: 2 }
+                ]
             },
             {
-                id: 'gempa',
-                title: 'Gempa Bumi',
-                icon: '⚡',
-                desc: 'Tunduk, Lindungi, dan Bertahan saat terjadi gempa.',
+                id: 'gempa', title: 'Gempa Bumi', icon: '⚡',
+                desc: 'Level 5: Tunduk, Lindungi, dan Bertahan saat terjadi gempa.',
                 video: 'Gu5cFwXkQJw',
                 literacy: "Suasana kelas siang itu sangat tenang sampai kaca jendela bergetar hebat akibat pergeseran lempeng tektonik. Budi meneriakkan aba-aba evakuasi. Rian (kursi roda) langsung mengunci rem di sudut yang jauh dari kaca dan melindungi kepalanya dengan tas. Tiara yang tunarungu sigap merunduk di bawah meja mengikuti gestur temannya. Ketenangan menyelamatkan mereka dari kepanikan.",
+                siaga: "1. Merunduk, Lindungi Kepala, dan Berpegangan (Drop, Cover, Hold On).<br>2. Jauhi kaca, lemari tinggi, dan dinding retak.<br>3. Evakuasi dengan tertib setelah getaran berhenti.",
                 climate: "PENTING: Gempa bumi disebabkan oleh aktivitas lempeng tektonik di perut bumi, BUKAN oleh perubahan iklim. Keselamatan bergantung pada kesiapsiagaan kita.",
-                game: {
-                    question: "Saat gempa terjadi, tindakan paling aman yang dilakukan Rian di kursi rodanya adalah?",
-                    options: [
-                        "A. Memacu kursi rodanya keluar kelas meski masih bergetar kuat.",
-                        "B. Mengunci roda di sudut aman yang jauh dari kaca lalu melindungi kepala.",
-                        "C. Berteriak meminta digotong."
-                    ],
-                    correct: 1,
-                    explanation: "Tepat sekali! Mengunci roda dan melindungi kepala adalah prosedur standar saat gempa."
-                }
+                game: [
+                    { q: "Saat gempa terjadi, tindakan paling aman yang dilakukan Rian di kursi rodanya adalah?", options: ["Memacu kursi rodanya keluar kelas meski masih bergetar kuat.", "Mengunci roda di sudut aman yang jauh dari kaca lalu melindungi kepala.", "Berteriak meminta digotong."], correct: 1 },
+                    { q: "Apa yang harus dilakukan saat gempa mengguncang kelas?", options: ["Berlari ke jendela", "Merunduk, berlindung di bawah meja kokoh, dan berpegangan", "Berdiri dekat lemari tinggi"], correct: 1 },
+                    { q: "Kapan siswa sebaiknya mengikuti evakuasi dari kelas?", options: ["Setelah guncangan berhenti, mengikuti jalur aman", "Ketika bangunan masih berguncang", "Dengan menggunakan lift"], correct: 0 },
+                    { q: "Apa penyebab utama banyak gempa bumi?", options: ["Perubahan warna awan", "Pelepasan energi akibat pergerakan pada patahan geologi", "Hujan deras setiap sore"], correct: 1 },
+                    { q: "Di mana tempat berkumpul setelah evakuasi?", options: ["Di bawah tiang listrik", "Di dekat dinding retak", "Di titik kumpul aman yang jauh dari bangunan"], correct: 2 }
+                ]
             },
             {
-                id: 'gunung',
-                title: 'Gunung Api',
-                icon: '🌋',
-                desc: 'Memahami peringatan dini dan letusan gunung berapi.',
+                id: 'gunung', title: 'Gunung Api', icon: '🌋',
+                desc: 'Level 6: Memahami peringatan dini dan letusan gunung berapi.',
                 video: 'uZ8WuF7lD68',
                 literacy: "Jawa Timur dikelilingi gunung berapi gagah seperti Kelud, Bromo, dan Semeru. Di papan pengumuman desa, Siti membaca poster peringatan dari PVMBG. 'Jika status AWAS (Level 4), warga zona merah harus segera mengungsi,' jelas Siti kepada Budi. Warga dilarang nekat mencari rumput atau pasir di dekat kawah bila sirine telah berbunyi.",
+                siaga: "1. Patuhi status dan rekomendasi PVMBG/BPBD.<br>2. Jauhi lembah sungai berhulu di puncak gunung.<br>3. Gunakan masker pelindung saat terjadi hujan abu.",
                 climate: "PENTING: Aktivitas magma gunung berapi adalah fenomena geologi alami bumi, BUKAN akibat cuaca atau pemanasan global. Kita wajib mematuhi rekomendasi zona aman.",
-                game: {
-                    question: "Mengapa kita tidak boleh mendekati kawah gunung atau sungainya saat berstatus AWAS?",
-                    options: [
-                        "A. Karena udaranya sangat dingin.",
-                        "B. Ada risiko lontaran batu pijar, gas beracun, dan awan panas yang mematikan.",
-                        "C. Karena jalanannya macet."
-                    ],
-                    correct: 1,
-                    explanation: "Sangat benar! Bahaya letusan dan aliran lahar panas bisa tiba dalam hitungan detik."
-                }
+                game: [
+                    { q: "Mengapa kita tidak boleh mendekati kawah gunung atau sungainya saat berstatus AWAS?", options: ["Karena udaranya sangat dingin.", "Ada risiko lontaran batu pijar, gas beracun, dan awan panas yang mematikan.", "Karena jalanannya macet."], correct: 1 },
+                    { q: "Ketika pemerintah mengumumkan evakuasi dari zona bahaya gunung api, apa yang harus dilakukan?", options: ["Tetap tinggal untuk merekam erupsi", "Segera mengikuti jalur evakuasi dan petunjuk petugas", "Mendekati kawah"], correct: 1 },
+                    { q: "Mengapa sungai berhulu di gunung api berbahaya saat hujan deras?", options: ["Karena air sungai pasti membeku", "Karena semua sungai mengering", "Karena aliran lahar dapat membawa lumpur, pasir, dan batu"], correct: 2 },
+                    { q: "Apakah perubahan iklim menjadi penyebab langsung erupsi gunung api?", options: ["Ya, suhu panas meletuskan gunung", "Tidak, erupsi berkaitan dengan proses geologi bumi", "Ya, hujan deras penyebabnya"], correct: 1 },
+                    { q: "Di mana kita sebaiknya memperoleh informasi status gunung api?", options: ["Dari pesan berantai", "Dari video lama di medsos", "Dari informasi resmi PVMBG, BPBD, dan petugas berwenang"], correct: 2 }
+                ]
             }
         ];
 
+        let currentUser = "";
+
+        function checkLogin() {
+            currentUser = localStorage.getItem('jtb_username');
+            if(currentUser) {
+                document.getElementById('user-display').innerText = currentUser;
+                showView('beranda');
+            } else {
+                showView('welcome-screen');
+            }
+        }
+
+        function loginPlayer() {
+            const name = document.getElementById('player-name').value.trim();
+            if(name === "") { alert("Mohon ketik nama lengkapmu dulu ya!"); return; }
+            localStorage.setItem('jtb_username', name);
+            currentUser = name;
+            document.getElementById('user-display').innerText = currentUser;
+            showView('beranda');
+        }
+
+        function resetProgress() {
+            if(confirm("Yakin ingin mereset data nama dan progres lencana di perangkat ini?")) {
+                localStorage.clear();
+                alert("Data berhasil direset. Silakan muat ulang halaman.");
+                location.reload();
+            }
+        }
+
         function renderMissions() {
             const grid = document.getElementById('mission-grid-container');
+            if(!grid) return;
             grid.innerHTML = '';
-            missions.forEach(m => {
+            let isPreviousCompleted = true;
+
+            missions.forEach((m, index) => {
                 const earned = localStorage.getItem('badge_' + m.id) === 'true';
+                const isLocked = !isPreviousCompleted;
+
                 grid.innerHTML += `
-                    <div class="mission-card" onclick="openMission('${m.id}')">
+                    <div class="mission-card ${isLocked ? 'locked' : ''}" onclick="${isLocked ? `alert('🔒 Selesaikan level sebelumnya terlebih dahulu untuk membuka gembok ini!')` : `openMission('${m.id}')`}">
+                        ${isLocked ? '<div class="lock-icon">🔒</div>' : ''}
                         <div class="mission-icon">${m.icon}</div>
                         <h3>${m.title}</h3>
                         <p style="font-size:0.9rem; color:var(--text-muted);">${m.desc}</p>
                         <div style="margin-top:10px;">
-                            <span class="badge-item ${earned ? 'earned' : ''}">${earned ? '🏆 Lencana Didapat' : '⭐ Belum Selesai'}</span>
+                            <span class="badge-item ${earned ? 'earned' : ''}">${earned ? '🏆 Lulus Level Ini' : (isLocked ? 'Terkunci' : '⭐ Belum Selesai')}</span>
                         </div>
                     </div>
                 `;
+                isPreviousCompleted = earned;
             });
             updateBadgeCount();
         }
@@ -544,8 +613,14 @@
         function showView(viewId) {
             document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-            document.getElementById(viewId).classList.add('active');
-            document.getElementById('nav-' + viewId).classList.add('active');
+            
+            if(viewId !== 'welcome-screen') {
+                document.getElementById(viewId).classList.add('active');
+                if(document.getElementById('nav-' + viewId)) document.getElementById('nav-' + viewId).classList.add('active');
+            } else {
+                document.getElementById('welcome-screen').classList.add('active');
+            }
+            if(viewId === 'beranda') renderMissions();
             window.scrollTo(0,0);
         }
 
@@ -555,16 +630,36 @@
             document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
             document.getElementById('misi-detail').classList.add('active');
 
+            let quizHtml = m.game.map((q, idx) => `
+                <div class="q-card">
+                    <p><strong>Soal ${idx+1}:</strong> ${q.q}</p>
+                    ${q.options.map((opt, oIdx) => `
+                        <label>
+                            <input type="radio" name="q_${m.id}_${idx}" value="${oIdx}" required>
+                            ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+            `).join('');
+
             let html = `
                 <div class="card">
                     <h2>${m.icon} Misi: ${m.title}</h2>
                     <div class="video-container" id="vid-wrap-${m.id}">
-                        <div class="video-poster" style="background-image: url('https://img.youtube.com/vi/${m.video}/hqdefault.jpg');" onclick="loadVideo('${m.id}', '${m.video}')"></div>
+                        <div class="video-poster" style="background-image: url('https://img.youtube.com/vi/${m.video}/hqdefault.jpg');" onclick="loadYouTube('${m.id}', '${m.video}')"></div>
+                    </div>
+                    <div style="text-align: right; margin-top: 5px; margin-bottom: 15px;" class="no-print">
+                        <a href="https://www.youtube.com/watch?v=${m.video}" target="_blank" style="font-size: 0.85rem; color: var(--primary-dark); text-decoration: underline;">🔗 Buka Video di YouTube (Jika Terkendala)</a>
                     </div>
 
                     <div class="literacy-panel">
                         <h3>📖 Pojok Literasi: Kisah Pejuang Bumi</h3>
                         <p>${m.literacy}</p>
+                    </div>
+
+                    <div class="siaga-box">
+                        <h3 style="color:#991b1b; margin-bottom:5px;">🚨 3 Langkah Siaga:</h3>
+                        <p>${m.siaga}</p>
                     </div>
 
                     <div class="climate-box">
@@ -573,82 +668,87 @@
                     </div>
 
                     <div class="game-box">
-                        <h3>🎮 Uji Literasi (Mini-Game)</h3>
-                        <p>${m.game.question}</p>
-                        <div class="quiz-options">
-                            ${m.game.options.map((opt, idx) => `
-                                <button class="quiz-btn" onclick="checkAnswer('${m.id}', ${idx}, ${m.game.correct})">${opt}</button>
-                            `).join('')}
-                        </div>
+                        <h3>🎮 Uji Tangkas Keselamatan (Syarat Buka Gembok)</h3>
+                        <p style="margin-bottom:15px; font-size:0.9rem;">Jawab 5 pertanyaan di bawah ini dengan benar untuk membuka level berikutnya!</p>
+                        <form id="form-${m.id}" onsubmit="checkQuiz(event, '${m.id}')">
+                            ${quizHtml}
+                            <button type="submit" class="btn" style="width:100%; margin-top:15px;">✅ Cek Jawaban</button>
+                        </form>
                         <div id="feedback-${m.id}" class="feedback"></div>
-                    </div>
-
-                    <div class="reflection-box" id="reflection-area-${m.id}">
-                        <h3>🧠 Refleksi: Hari Ini Aku Tahu...</h3>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Tuliskan hal paling penting atau pelajaran baru yang kamu dapatkan dari misi ini:</p>
-                        <textarea id="reflection-input-${m.id}" placeholder="Contoh: Hari ini aku tahu cara kerja akar pohon menahan longsor..." style="width:100%; height:80px; padding:10px; border-radius:6px; border:1px solid var(--border); margin-bottom:8px;"></textarea>
-                        <button class="btn" onclick="saveReflection('${m.id}')" style="background: var(--secondary);">💾 Simpan Refleksi</button>
-                        <p id="reflection-saved-${m.id}" style="margin-top:6px; font-weight:600; color:var(--secondary); font-size:0.9rem;"></p>
-                    </div>
-
-                    <div class="action-pledge" id="pledge-area-${m.id}" style="display:none;">
-                        <h3>🌟 Aksi Kecilku Minggu Ini</h3>
-                        <input type="text" id="pledge-input-${m.id}" placeholder="Tulis aksi nyatamu di sini..." style="width:100%; padding:10px; margin-bottom:10px; border-radius:6px; border:1px solid var(--border);">
-                        <button class="btn" onclick="savePledge('${m.id}')">💾 Simpan Janji Aksiku</button>
-                        <p id="pledge-saved-${m.id}" style="margin-top:8px; font-weight:600; color:var(--primary);"></p>
                     </div>
                 </div>
             `;
             document.getElementById('mission-content-area').innerHTML = html;
-            
-            if(localStorage.getItem('pledge_' + id)) {
-                document.getElementById('pledge-area-' + id).style.display = 'block';
-                document.getElementById('pledge-input-' + id).value = localStorage.getItem('pledge_' + id);
-                document.getElementById('pledge-saved-' + id).innerText = '✅ Tersimpan di perangkat.';
-            }
-            if(localStorage.getItem('reflection_' + id)) {
-                document.getElementById('reflection-input-' + id).value = localStorage.getItem('reflection_' + id);
-                document.getElementById('reflection-saved-' + id).innerText = '✅ Refleksi tersimpan di perangkat.';
-            }
             window.scrollTo(0,0);
         }
 
-        function loadVideo(cid, vid) {
-            document.getElementById('vid-wrap-' + cid).innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        function loadYouTube(cid, vid) {
+            const wrap = document.getElementById('vid-wrap-' + cid);
+            if (!wrap) return;
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(vid)}?autoplay=1&rel=0&playsinline=1`;
+            iframe.width = '100%';
+            iframe.height = '100%';
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+            iframe.setAttribute('allowfullscreen', '');
+            wrap.replaceChildren(iframe);
         }
 
-        function checkAnswer(mid, sel, cor) {
+        function checkQuiz(e, mid) {
+            e.preventDefault();
+            const m = missions.find(x => x.id === mid);
+            let allCorrect = true;
+
+            m.game.forEach((q, idx) => {
+                const selected = document.querySelector(`input[name="q_${mid}_${idx}"]:checked`);
+                if(selected && parseInt(selected.value) !== q.correct) {
+                    allCorrect = false;
+                } else if(!selected) {
+                    allCorrect = false;
+                }
+            });
+
             const fb = document.getElementById('feedback-' + mid);
-            if(sel === cor) {
-                fb.className = 'feedback success'; fb.innerHTML = '🎉 Benar! ' + missions.find(x=>x.id===mid).game.explanation;
+            if(allCorrect) {
+                fb.className = 'feedback success';
+                fb.innerHTML = '🎉 Luar Biasa! Semua jawabanmu BENAR.<br>Kamu telah membuka gembok level berikutnya!';
                 localStorage.setItem('badge_' + mid, 'true');
-                document.getElementById('pledge-area-' + mid).style.display = 'block';
                 updateBadgeCount();
+
+                if(mid === 'gunung') {
+                    fb.innerHTML += `<br><br><button class="btn" style="background:var(--accent); font-size:1.1rem; padding:12px 24px;" onclick="showCertificate()">🏆 Ambil Sertifikat Pejuang Bumi</button>`;
+                }
             } else {
-                fb.className = 'feedback error'; fb.innerHTML = '💡 Belum tepat, coba pahami lagi teks literasinya dan pilih jawaban lain!';
+                fb.className = 'feedback error';
+                fb.innerHTML = '💡 Masih ada jawaban yang kurang tepat. Yuk, baca ulang Pojok Literasinya dan periksa kembali jawabanmu!';
             }
         }
 
-        function savePledge(mid) {
-            const v = document.getElementById('pledge-input-' + mid).value;
-            if(v) { localStorage.setItem('pledge_' + mid, v); document.getElementById('pledge-saved-' + mid).innerText = '✅ Janji aksi berhasil disimpan!'; }
-        }
-
-        function saveReflection(mid) {
-            const v = document.getElementById('reflection-input-' + mid).value;
-            if(v) { localStorage.setItem('reflection_' + mid, v); document.getElementById('reflection-saved-' + mid).innerText = '✅ Refleksi berhasil disimpan!'; }
-        }
-
         function updateBadgeCount() {
-            let c = 0; missions.forEach(m => { if(localStorage.getItem('badge_'+m.id)==='true') c++; });
-            document.getElementById('badge-count').innerText = c;
+            let c = 0; 
+            missions.forEach(m => { if(localStorage.getItem('badge_'+m.id)==='true') c++; });
+            const badgeEl = document.getElementById('badge-count');
+            if(badgeEl) badgeEl.innerText = c;
+        }
+
+        function showCertificate() {
+            const nameDisplay = document.getElementById('cert-name-display');
+            if(nameDisplay) nameDisplay.innerText = currentUser.toUpperCase();
+            const modal = document.getElementById('cert-modal');
+            if(modal) modal.style.display = 'flex';
+        }
+
+        function closeCert() {
+            const modal = document.getElementById('cert-modal');
+            if(modal) modal.style.display = 'none';
         }
 
         let size = 1;
         function adjustFontSize(v) { size += v*0.1; if(size<0.9) size=0.9; if(size>1.4) size=1.4; document.body.style.fontSize = size+'rem'; }
         function toggleContrast() { document.body.setAttribute('data-contrast', document.body.getAttribute('data-contrast')==='high'?'normal':'high'); }
 
-        window.onload = renderMissions;
+        window.onload = checkLogin;
     </script>
 </body>
 </html>
