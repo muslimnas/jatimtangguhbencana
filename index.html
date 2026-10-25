@@ -387,7 +387,7 @@
         <section id="guru" class="view-section">
             <div class="card">
                 <h2>👩‍🏫 Ruang Guru & Fasilitator</h2>
-                <p>Modul interaktif versi <strong>Gamifikasi Berjenjang (Leveling)</strong> ini dirancang untuk memicu motivasi belajar siswa Fase B & C melalui pendekatan tantangan, literasi, refleksi, dan reward (sertifikat). Sangat cocok diimplementasikan pada kegiatan <strong>kokurikuler ataupun Proyek Penguatan Profil Pelajar Pancasila (P5)</strong> tema Gaya Hidup Berkelanjutan.</p>
+                <p>Modul interaktif versi <strong>Gamifikasi Berjenjang (Leveling)</strong> ini dirancang untuk memicu motivasi belajar siswa Fase B & C melalui pendekatan tantangan, literasi, refleksi, aksi nyata, dan reward (sertifikat). Sangat cocok diimplementasikan pada kegiatan <strong>kokurikuler ataupun Proyek Penguatan Profil Pelajar Pancasila (P5)</strong> tema Gaya Hidup Berkelanjutan.</p>
                 
                 <div class="rpp-box">
                     <h3>📋 Skenario Pembelajaran Singkat (RPP 40 Menit)</h3>
@@ -446,7 +446,7 @@
             <h1>SERTIFIKAT PEJUANG BUMI</h1>
             <p style="font-size: 1.1rem; color: #475569;">Diberikan dengan bangga kepada:</p>
             <h1 id="cert-name-display" style="color: #2563eb; font-size: 2.8rem; text-decoration: underline; text-underline-offset: 8px; margin: 15px 0;">NAMA SISWA</h1>
-            <p style="font-size: 1.050rem; line-height: 1.6;">Telah berhasil menuntaskan <strong>6 Level Misi Literasi, Refleksi & Kesiapsiagaan Bencana</strong><br>di Portal Jatim Tangguh Bencana (JTB).</p>
+            <p style="font-size: 1.050rem; line-height: 1.6;">Telah berhasil menuntaskan <strong>6 Level Misi Literasi, Refleksi & Aksi Nyata Bencana</strong><br>di Portal Jatim Tangguh Bencana (JTB).</p>
             <p style="margin-top: 25px; font-weight: bold; font-size: 0.95rem;">Ernaz Siswanto, S.Pd., M.Pd.<br><span style="font-weight: normal; color: #64748b;">Kepala SDN Tulungrejo 03 Kota Batu / Pengembang Portal</span></p>
             
             <div class="no-print" style="margin-top: 25px; display: flex; justify-content: center; gap: 15px;">
@@ -677,7 +677,7 @@
                         <div id="feedback-${m.id}" class="feedback"></div>
                     </div>
 
-                    <!-- REFLEKSI BELAJAR -->
+                    <!-- REFLEKSI BELAJAR (SELALU MUNCUL) -->
                     <div class="reflection-box" id="reflection-area-${m.id}">
                         <h3>🧠 Refleksi: Hari Ini Aku Tahu...</h3>
                         <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Tuliskan hal penting atau pelajaran baru yang kamu dapatkan dari misi ini:</p>
@@ -686,10 +686,10 @@
                         <p id="reflection-saved-${m.id}" style="margin-top:6px; font-weight:600; color:var(--secondary); font-size:0.9rem;"></p>
                     </div>
 
-                    <!-- AKSI NYATA / JANJI AKSI -->
-                    <div class="action-pledge" id="pledge-area-${m.id}" style="display: ${localStorage.getItem('badge_' + id) === 'true' ? 'block' : 'none'};">
+                    <!-- AKSI NYATA / JANJI AKSI (SELALU MUNCUL) -->
+                    <div class="action-pledge" id="pledge-area-${m.id}">
                         <h3>🌟 Aksi Kecilku Minggu Ini</h3>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Tuliskan aksi nyata yang akan kamu lakukan di rumah/sekolah:</p>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Tuliskan aksi nyata yang akan kamu lakukan di rumah atau sekolah:</p>
                         <input type="text" id="pledge-input-${m.id}" placeholder="Contoh: Mematikan keran air setelah selesai dipakai..." style="width:100%; padding:10px; margin-bottom:10px; border-radius:6px; border:1px solid var(--border); background:var(--card-bg); color:var(--text-main);">
                         <button class="btn" onclick="savePledge('${m.id}')">💾 Simpan Janji Aksiku</button>
                         <p id="pledge-saved-${m.id}" style="margin-top:8px; font-weight:600; color:var(--primary);"></p>
@@ -741,13 +741,8 @@
             const fb = document.getElementById('feedback-' + mid);
             if(allCorrect) {
                 fb.className = 'feedback success';
-                fb.innerHTML = '🎉 Luar Biasa! Semua jawabanmu BENAR.<br>Kamu telah membuka gembok level berikutnya & membuka kolom Aksi Nyata!';
+                fb.innerHTML = '🎉 Luar Biasa! Semua jawabanmu BENAR.<br>Kamu telah membuka gembok level berikutnya!';
                 localStorage.setItem('badge_' + mid, 'true');
-                
-                // Munculkan kotak aksi nyata
-                const pledgeArea = document.getElementById('pledge-area-' + mid);
-                if(pledgeArea) pledgeArea.style.display = 'block';
-
                 updateBadgeCount();
 
                 if(mid === 'gunung') {
